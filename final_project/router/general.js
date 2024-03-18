@@ -23,20 +23,34 @@ public_users.get("/isbn/:isbn", function (req, res) {
 
 // Get book details based on author
 public_users.get("/author/:author", function (req, res) {
-  //Write your code here
-  return res.status(300).json({ message: "Yet to be implemented" });
+  let filteredBooks = [];
+  for (const book in books) {
+    if (books[book].author === req.params.author) {
+      filteredBooks.push(books[book]);
+    }
+  }
+
+  return res.status(200).json({ bookbyauthor: filteredBooks });
 });
 
 // Get all books based on title
 public_users.get("/title/:title", function (req, res) {
-  //Write your code here
-  return res.status(300).json({ message: "Yet to be implemented" });
+  let filteredBooks = [];
+  for (const book in books) {
+    if (books[book].title === req.params.title) {
+      filteredBooks.push(books[book]);
+    }
+  }
+
+  return res.status(200).json({ bookbytitle: filteredBooks });
 });
 
 //  Get book review
 public_users.get("/review/:isbn", function (req, res) {
   //Write your code here
-  return res.status(300).json({ message: "Yet to be implemented" });
+  if (books[req.params.isbn]) {
+    return res.status(200).json(books[req.params.isbn].reviews);
+  } else throw new Error(`book with the isbn ${req.params.isbn} not found.`);
 });
 
 module.exports.general = public_users;
