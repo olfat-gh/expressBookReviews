@@ -4,5 +4,5 @@ module.exports.errorLogger = function (err, req, res, next) {
 };
 
 module.exports.errorHandler = function (err, req, res, next) {
-  res.status(500).send(JSON.stringify(err, null, 4));
+  res.status(500).json({ message: err.message });
 };
